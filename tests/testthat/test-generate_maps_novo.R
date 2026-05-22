@@ -63,3 +63,25 @@ testthat::test_that("generate_maps_novo aceita semanas e valores como factor", {
   testthat::expect_true(nrow(build$data[[1]]) > 0)
   testthat::expect_gt(length(unique(build$data[[1]]$fill)), 1)
 })
+
+testthat::test_that("generate_maps_novo filtra pelo argumento arbo sem ambiguidade", {
+  fixtures <- legacy_make_spatial_fixtures()
+
+  dados <- fixtures$sp_bairros |>
+    dplyr::slice(c(1, 2)) |>
+    dplyr::mutate(
+      sem_not = c(202401, 202401),
+      arbo = c("dengue", "chikon"),
+      p_inc100k = c(10, 20)
+    )
+
+  plots <- generate_maps_novo(
+    data = dados,
+    weeks_2_plot = 202401,
+    arbo = "dengue"
+  )
+
+  build <- ggplot2::ggplot_build(plots[[1]])
+
+  testthat::expect_equal(nrow(build$data[[1]]), 1)
+})
