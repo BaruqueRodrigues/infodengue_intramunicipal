@@ -22,6 +22,7 @@ generate_maps_novo <- function(data, weeks_2_plot, lim_range = NULL,
                                area = NULL, allocated_data = NULL,
                                total_data = NULL) {
   weeks_2_plot <- as.numeric(as.character(weeks_2_plot))
+  arbo_filter <- arbo
 
   data <- data %>%
     dplyr::mutate(
@@ -31,7 +32,7 @@ generate_maps_novo <- function(data, weeks_2_plot, lim_range = NULL,
 
   if (is.null(lim_range)) {
     filtered_data <- data %>%
-      dplyr::filter(.data$sem_not %in% weeks_2_plot, .data$arbo == arbo)
+      dplyr::filter(.data$sem_not %in% weeks_2_plot, .data$arbo == arbo_filter)
 
     lim_range <- range(dplyr::pull(filtered_data, !!rlang::sym(value_col)), na.rm = TRUE)
   }
@@ -40,7 +41,7 @@ generate_maps_novo <- function(data, weeks_2_plot, lim_range = NULL,
 
   purrr::map(weeks_2_plot, function(week) {
     week_data <- data %>%
-      dplyr::filter(.data$sem_not == week, .data$arbo == arbo)
+      dplyr::filter(.data$sem_not == week, .data$arbo == arbo_filter)
 
     week_sf <- week_data %>%
       sf::st_as_sf(sf_column_name = geom_col)
@@ -54,11 +55,11 @@ generate_maps_novo <- function(data, weeks_2_plot, lim_range = NULL,
         dplyr::mutate(sem_not = as.numeric(as.character(.data$sem_not)))
 
       n_alloc <- allocated_data %>%
-        dplyr::filter(.data$sem_not == week, .data$arbo == arbo) %>%
+        dplyr::filter(.data$sem_not == week, .data$arbo == arbo_filter) %>%
         nrow()
 
       n_total <- total_data %>%
-        dplyr::filter(.data$sem_not == week, .data$arbo == arbo) %>%
+        dplyr::filter(.data$sem_not == week, .data$arbo == arbo_filter) %>%
         nrow()
 
       percent_na <- if (n_total == 0) NA_real_ else 100 - (n_alloc / n_total * 100)

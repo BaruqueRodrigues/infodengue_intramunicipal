@@ -65,10 +65,11 @@
 generate_maps <- function(data, weeks_2_plotdistrito_nome, lim_range = NULL,
                           value_col = "p_inc100k", arbo = arbo, geom_col = "geometry",
                           shape = NULL, area = NULL) {
+  arbo_filter <- arbo
 
   # Calcular limites automaticamente se não fornecidos
   if (is.null(lim_range)) {
-    filtered_data <- data %>% filter(sem_not %in% weeks_2_plot & arbo == !!arbo)
+    filtered_data <- data %>% filter(sem_not %in% weeks_2_plot & arbo == arbo_filter)
     lim_range <- range(pull(filtered_data, !!sym(value_col)), na.rm = TRUE)
   }
 
@@ -77,11 +78,11 @@ generate_maps <- function(data, weeks_2_plotdistrito_nome, lim_range = NULL,
 
   # Gerar mapas usando map() para maior eficiência
   plots_list <- map(weeks_2_plot, ~ {
-    week_data <- data %>% filter(sem_not == .x & arbo == !!arbo)
+    week_data <- data %>% filter(sem_not == .x & arbo == arbo_filter)
 
     # Calcular porcentagem de não alocados (se aplicável)
-    percent_na <- 100 - (df_mun_ok %>% filter(sem_not == .x & arbo == !!arbo) %>% nrow() /
-                           df_mun %>% filter(sem_not == .x & arbo == !!arbo) %>% nrow() * 100)
+    percent_na <- 100 - (df_mun_ok %>% filter(sem_not == .x & arbo == arbo_filter) %>% nrow() /
+                           df_mun %>% filter(sem_not == .x & arbo == arbo_filter) %>% nrow() * 100)
 
 
     # Criar plot base
