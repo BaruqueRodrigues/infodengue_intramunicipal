@@ -1,4 +1,3 @@
-<img width="1088" height="558" alt="image" src="https://github.com/user-attachments/assets/f6c34c6a-13c3-474d-ba51-45a1e336c130" />
 # infodengeintramunicipal
 
 `infodengeintramunicipal` reúne funções em R para preparar, classificar e
