@@ -1,7 +1,8 @@
-# infodengesubmunicipal
+<img width="1088" height="558" alt="image" src="https://github.com/user-attachments/assets/f6c34c6a-13c3-474d-ba51-45a1e336c130" />
+# infodengeintramunicipal
 
-`infodengesubmunicipal` reúne funções em R para preparar, classificar e
-visualizar dados epidemiológicos em escala submunicipal no fluxo do
+`infodengeintramunicipal` reúne funções em R para preparar, classificar e
+visualizar dados epidemiológicos em escala intramunicipal no fluxo do
 InfoDengue. O pacote cobre tarefas como leitura de dados de notificação,
 normalização de bairros, completude de séries semanais, associação espacial
 entre bairros e distritos, cálculo de alerta epidemiológico, gráficos e mapas.
@@ -31,7 +32,7 @@ quando precisar reproduzir código legado sem alterar a estrutura original.
 
 ```r
 install.packages("remotes")
-remotes::install_github("baruquerodrigues/infodengesubmunicipal")
+remotes::install_github("baruquerodrigues/infodengeintramunicipal")
 ```
 
 Para instalar a partir de uma cópia local do pacote:
@@ -44,7 +45,7 @@ devtools::install(".")
 Carregue o pacote com:
 
 ```r
-library(infodengesubmunicipal)
+library(infodengeintramunicipal)
 ```
 
 ## Fluxo recomendado com a API nova
@@ -60,7 +61,7 @@ Um fluxo típico usa as funções novas nesta ordem:
 
 ```r
 library(dplyr)
-library(infodengesubmunicipal)
+library(infodengeintramunicipal)
 
 semana_atual <- 202405
 ano_atual <- 2024
